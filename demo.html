@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Photos - Demo & Customization</title>
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .demo-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+        }
+        .demo-section h2 {
+            color: #667eea;
+            margin-top: 0;
+        }
+        .config-example {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+        }
+        .customization-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group label {
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        .form-group input, .form-group select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: transform 0.2s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        .btn-secondary {
+            background: linear-gradient(135deg, #6c757d, #495057);
+        }
+        .preview {
+            margin-top: 20px;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--preview-start, #667eea), var(--preview-end, #764ba2));
+            border-radius: 8px;
+            color: white;
+            text-align: center;
+        }
+        .preview h3 {
+            margin-top: 0;
+        }
+        .color-picker {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .color-picker input[type="color"] {
+            width: 50px;
+            height: 40px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .qr-section {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            background: #f0f0f0;
+            border: 2px dashed #ccc;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎉 Wedding Photos App - Demo & Customization</h1>
+        
+        <div class="demo-section">
+            <h2>🚀 Quick Start</h2>
+            <p>This demo shows you how to customize your wedding photo app. Make changes below and see them reflected in the preview.</p>
+            
+            <div class="customization-form">
+                <div class="form-group">
+                    <label for="coupleNames">Couple Names:</label>
+                    <input type="text" id="coupleNames" value="Sarah & Michael" placeholder="Enter couple names">
+                </div>
+                
+                <div class="form-group">
+                    <label for="weddingDate">Wedding Date:</label>
+                    <input type="text" id="weddingDate" value="August 15, 2025" placeholder="Enter wedding date">
+                </div>
+                
+                <div class="form-group">
+                    <label for="logoEmoji">Logo Emoji:</label>
+                    <select id="logoEmoji">
+                        <option value="💒">💒 Church</option>
+                        <option value="💕">💕 Hearts</option>
+                        <option value="🌹">🌹 Rose</option>
+                        <option value="✨">✨ Sparkles</option>
+                        <option value="🎊">🎊 Celebration</option>
+                        <option value="💍">💍 Ring</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="welcomeMessage">Welcome Message:</label>
+                    <input type="text" id="welcomeMessage" value="Share your special moments with us" placeholder="Enter welcome message">
+                </div>
+                
+                <div class="form-group">
+                    <label>Primary Colors:</label>
+                    <div class="color-picker">
+                        <input type="color" id="colorStart" value="#667eea">
+                        <span>to</span>
+                        <input type="color" id="colorEnd" value="#764ba2">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Button Colors:</label>
+                    <div class="color-picker">
+                        <input type="color" id="buttonStart" value="#ff6b6b">
+                        <span>to</span>
+                        <input type="color" id="buttonEnd" value="#ee5a24">
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn" onclick="updatePreview()">Update Preview</button>
+                <button class="btn btn-secondary" onclick="generateConfig()">Generate Config</button>
+                <button class="btn btn-secondary" onclick="openApp()">Open App</button>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>👀 Live Preview</h2>
+            <div class="preview" id="preview">
+                <h3 id="previewTitle">Welcome to Lita & Arya's Wedding!</h3>
+                <p id="previewSubtitle">Share your special moments with us</p>
+                <div id="previewLogo" style="font-size: 3rem; margin: 20px 0;">💒</div>
+                <button class="btn" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24);">
+                    📸 Take a Photo
+                </button>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>⚙️ Configuration Code</h2>
+            <p>Copy this configuration to your <code>config.js</code> file:</p>
+            <div class="config-example" id="configOutput">
+                // Configuration will appear here after clicking "Generate Config"
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>📱 How to Use</h2>
+            <ol>
+                <li><strong>Customize</strong> the app using the form above</li>
+                <li><strong>Generate</strong> the configuration code</li>
+                <li><strong>Copy</strong> the code to your <code>config.js</code> file</li>
+                <li><strong>Deploy</strong> your app to a web server</li>
+                <li><strong>Share</strong> the URL with your wedding guests</li>
+            </ol>
+        </div>
+        
+        <div class="demo-section">
+            <h2>🔗 Deployment Options</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <h4>Free Options:</h4>
+                    <ul>
+                        <li><strong>Netlify:</strong> Drag & drop deployment</li>
+                        <li><strong>Vercel:</strong> Git-based deployment</li>
+                        <li><strong>GitHub Pages:</strong> Free hosting</li>
+                        <li><strong>Firebase:</strong> Google's hosting</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Paid Options:</h4>
+                    <ul>
+                        <li><strong>AWS S3:</strong> Scalable hosting</li>
+                        <li><strong>Google Cloud:</strong> Integrated services</li>
+                        <li><strong>Traditional hosting:</strong> cPanel, etc.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="qr-section">
+            <h2>📱 QR Code for Guests</h2>
+            <p>Generate a QR code with your app URL to place on tables at your wedding:</p>
+            <div class="qr-code">
+                <div>
+                    <strong>QR Code</strong><br>
+                    <small>Will show your app URL</small>
+                </div>
+            </div>
+            <p><small>Use any online QR code generator with your app URL</small></p>
+        </div>
+    </div>
+
+    <script>
+        function updatePreview() {
+            const coupleNames = document.getElementById('coupleNames').value;
+            const logoEmoji = document.getElementById('logoEmoji').value;
+            const welcomeMessage = document.getElementById('welcomeMessage').value;
+            const colorStart = document.getElementById('colorStart').value;
+            const colorEnd = document.getElementById('colorEnd').value;
+            const buttonStart = document.getElementById('buttonStart').value;
+            const buttonEnd = document.getElementById('buttonEnd').value;
+            
+            // Update preview
+            document.getElementById('previewTitle').textContent = `Welcome to ${coupleNames}'s Wedding!`;
+            document.getElementById('previewSubtitle').textContent = welcomeMessage;
+            document.getElementById('previewLogo').textContent = logoEmoji;
+            
+            // Update colors
+            const preview = document.getElementById('preview');
+            preview.style.background = `linear-gradient(135deg, ${colorStart}, ${colorEnd})`;
+            
+            const button = preview.querySelector('.btn');
+            button.style.background = `linear-gradient(135deg, ${buttonStart}, ${buttonEnd})`;
+        }
+        
+        function generateConfig() {
+            const coupleNames = document.getElementById('coupleNames').value;
+            const logoEmoji = document.getElementById('logoEmoji').value;
+            const welcomeMessage = document.getElementById('welcomeMessage').value;
+            const colorStart = document.getElementById('colorStart').value;
+            const colorEnd = document.getElementById('colorEnd').value;
+            const buttonStart = document.getElementById('buttonStart').value;
+            const buttonEnd = document.getElementById('buttonEnd').value;
+            
+            const config = `const WEDDING_CONFIG = {
+    // Wedding Details
+    coupleNames: "${coupleNames}",
+    weddingDate: "${document.getElementById('weddingDate').value}",
+    weddingLocation: "Your Wedding Venue",
+    
+    // App Customization
+    appTitle: "Wedding Photos - Share Your Moments",
+    welcomeMessage: "${welcomeMessage}",
+    instructionText: "Tap the button above to capture and share your memories",
+    
+    // Colors and Theme
+    primaryGradient: {
+        start: "${colorStart}",
+        end: "${colorEnd}"
+    },
+    buttonGradient: {
+        start: "${buttonStart}",
+        end: "${buttonEnd}"
+    },
+    
+    // Camera Settings
+    camera: {
+        preferredCamera: "environment",
+        maxWidth: 1920,
+        maxHeight: 1080,
+        imageQuality: 0.9,
+        photoFormat: "image/jpeg"
+    },
+    
+    // Upload Settings
+    upload: {
+        maxFileSize: 10 * 1024 * 1024,
+        allowedFormats: ["image/jpeg", "image/png", "image/webp"],
+        autoUpload: true,
+        showPreview: true
+    },
+    
+    // UI Settings
+    ui: {
+        showLogo: true,
+        logoEmoji: "${logoEmoji}",
+        enableAnimations: true,
+        enableHapticFeedback: true,
+        showUploadProgress: true
+    }
+};`;
+            
+            document.getElementById('configOutput').textContent = config;
+        }
+        
+        function openApp() {
+            window.open('index.html', '_blank');
+        }
+        
+        // Initialize preview
+        updatePreview();
+    </script>
+</body>
+</html> 

@@ -1,0 +1,44 @@
+{
+  "name": "wedding-photos",
+  "version": "1.0.0",
+  "description": "A simple, mobile-first web application for collecting wedding photos from guests",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "start:node": "npx http-server -p 8000",
+    "start:php": "php -S localhost:8000",
+    "build": "echo 'No build step required - static files only'",
+    "deploy:netlify": "echo 'Drag and drop the wedding-photos folder to Netlify'",
+    "deploy:vercel": "vercel --prod",
+    "deploy:firebase": "firebase deploy"
+  },
+  "keywords": [
+    "wedding",
+    "photos",
+    "camera",
+    "mobile",
+    "pwa",
+    "web-app"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/wedding-photos.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/wedding-photos/issues"
+  },
+  "homepage": "https://github.com/yourusername/wedding-photos#readme",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+} 

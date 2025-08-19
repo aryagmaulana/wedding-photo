@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Wedding Photos - Share Your Moments</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Welcome Screen -->
+        <div id="welcome-screen" class="screen active">
+            <div class="content">
+                <div class="logo" id="wedding-logo">
+                    💒
+                </div>
+                <h1 id="welcome-title">Welcome to Lita & Arya's Wedding!</h1>
+                <p class="subtitle" id="welcome-subtitle">Share your special moments with us</p>
+                <button id="take-photo-btn" class="primary-btn">
+                    📸 Take a Photo
+                </button>
+                <p class="instruction" id="welcome-instruction">Tap the button above to capture and share your memories</p>
+            </div>
+        </div>
+
+        <!-- Camera Screen -->
+        <div id="camera-screen" class="screen">
+            <div class="camera-header">
+                <button id="back-btn" class="back-btn">← Back</button>
+                <h2>Take a Photo</h2>
+            </div>
+            <div class="camera-container">
+                <video id="camera-preview" autoplay playsinline muted></video>
+                <canvas id="photo-canvas" style="display: none;"></canvas>
+                <div class="camera-overlay">
+                    <div class="camera-frame"></div>
+                </div>
+            </div>
+            <div class="camera-controls">
+                <button id="capture-btn" class="capture-btn">📸</button>
+            </div>
+        </div>
+
+        <!-- Preview Screen -->
+        <div id="preview-screen" class="screen">
+            <div class="preview-header">
+                <button id="retake-btn" class="back-btn">← Retake</button>
+                <h2>Preview Photo</h2>
+            </div>
+            <div class="preview-container">
+                <img id="preview-image" alt="Photo preview">
+            </div>
+            <div class="preview-controls">
+                <button id="share-btn" class="primary-btn">Share Photo</button>
+            </div>
+        </div>
+
+        <!-- Upload Screen -->
+        <div id="upload-screen" class="screen">
+            <div class="content">
+                <div class="upload-animation">
+                    <div class="spinner"></div>
+                </div>
+                <h2>Uploading...</h2>
+                <p>Thank you for sharing this moment!</p>
+            </div>
+        </div>
+
+        <!-- Success Screen -->
+        <div id="success-screen" class="screen">
+            <div class="content">
+                <div class="success-icon">✅</div>
+                <h2>Success!</h2>
+                <p>Your photo has been shared with the happy couple.</p>
+                <button id="take-another-btn" class="primary-btn">Take Another Photo</button>
+            </div>
+        </div>
+
+        <!-- Error Screen -->
+        <div id="error-screen" class="screen">
+            <div class="content">
+                <div class="error-icon">❌</div>
+                <h2>Oops!</h2>
+                <p id="error-message">Something went wrong. Please try again.</p>
+                <button id="try-again-btn" class="primary-btn">Try Again</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 
