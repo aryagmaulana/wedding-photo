@@ -235,49 +235,115 @@ class WeddingPhotoApp {
         this.showUpload();
 
         try {
-            // Simulate upload delay (replace with actual upload logic)
-            await this.simulateUpload();
+            // Upload directly to Google Cloud Storage
+            const result = await this.uploadToServer(this.capturedPhoto);
             
-            // For demo purposes, we'll simulate a successful upload
-            // In production, you would upload to your server/Google Drive here
-            await this.uploadToServer(this.capturedPhoto);
-            
-            this.showSuccess();
+            if (result.success) {
+                console.log('Photo uploaded successfully:', result.publicUrl);
+                this.showSuccess();
+            } else {
+                throw new Error(result.error || 'Upload failed');
+            }
             
         } catch (error) {
             console.error('Upload error:', error);
-            this.showError('Failed to upload photo. Please try again.');
+            this.showError(`Failed to upload photo: ${error.message}`);
         }
     }
 
-    async simulateUpload() {
-        // Simulate network delay
-        return new Promise(resolve => setTimeout(resolve, 2000));
-    }
+
 
     async uploadToServer(photoBlob) {
-        // This is where you would implement the actual upload logic
-        // For now, we'll simulate a successful upload
-        
-        // Example implementation for Google Drive API:
-        // const formData = new FormData();
-        // formData.append('photo', photoBlob, `wedding_photo_${Date.now()}.jpg`);
-        // 
-        // const response = await fetch('/api/upload', {
-        //     method: 'POST',
-        //     body: formData
-        // });
-        // 
-        // if (!response.ok) {
-        //     throw new Error('Upload failed');
-        // }
-        // 
-        // return response.json();
-        
-        // For demo purposes, just wait a bit
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        return { success: true };
+        try {
+            // Generate unique filename
+            const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+            const uniqueId = Math.random().toString(36).substring(2, 10);
+            const filename = `wedding-photos/${timestamp}_${uniqueId}.jpg`;
+            
+            // Convert blob to base64 for direct upload
+            const base64Data = await this.blobToBase64(photoBlob);
+            
+            // Create the upload URL for Google Cloud Storage
+            const bucketName = 'bucket-armalino-photo';
+            const uploadUrl = `https://storage.googleapis.com/upload/storage/v1/b/${bucketName}/o`;
+            
+            // Prepare the upload request
+            const params = new URLSearchParams({
+                name: filename,
+                uploadType: 'media'
+            });
+            
+            const response = await fetch(`${uploadUrl}?${params}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'image/jpeg',
+                    'Content-Length': photoBlob.size.toString()
+                },
+                body: photoBlob
+            });
+            
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error('Upload failed:', response.status, errorText);
+                throw new Error(`Upload failed: ${response.status} - ${errorText}`);
+            }
+            
+            const result = await response.json();
+            console.log('Upload successful:', result);
+            
+            // Make the file publicly accessible
+            await this.makeFilePublic(filename);
+            
+            return {
+                success: true,
+                filename: filename,
+                publicUrl: `https://storage.googleapis.com/${bucketName}/${filename}`,
+                size: photoBlob.size,
+                uploadedAt: new Date().toISOString()
+            };
+            
+        } catch (error) {
+            console.error('Upload error:', error);
+            throw new Error(`Upload failed: ${error.message}`);
+        }
+    }
+    
+    async blobToBase64(blob) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+                const base64 = reader.result.split(',')[1];
+                resolve(base64);
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+        });
+    }
+    
+    async makeFilePublic(filename) {
+        try {
+            const bucketName = 'bucket-armalino-photo';
+            const aclUrl = `https://storage.googleapis.com/storage/v1/b/${bucketName}/o/${encodeURIComponent(filename)}/acl`;
+            
+            const response = await fetch(aclUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    entity: 'allUsers',
+                    role: 'READER'
+                })
+            });
+            
+            if (!response.ok) {
+                console.warn('Failed to make file public:', response.status);
+            } else {
+                console.log('File made public successfully');
+            }
+        } catch (error) {
+            console.warn('Error making file public:', error);
+        }
     }
 
     // Utility method to handle orientation changes
