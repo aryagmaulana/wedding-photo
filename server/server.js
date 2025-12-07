@@ -36,7 +36,7 @@ const storage = new Storage({
   keyFilename: process.env.GOOGLE_CLOUD_KEY_FILE || 'service-account-key.json',
 });
 
-const bucketName = 'bucket-armalino-photos';
+const bucketName = 'bucket-armalino-photos2';
 const bucket = storage.bucket(bucketName);
 
 // Health check endpoint
@@ -184,3 +184,4 @@ app.listen(PORT, () => {
 
 
 module.exports = app; 
+
