@@ -264,7 +264,7 @@ class WeddingPhotoApp {
             const base64Data = await this.blobToBase64(photoBlob);
             
             // Create the upload URL for Google Cloud Storage
-            const bucketName = 'bucket-armalino-photos';
+            const bucketName = 'bucket-armalino-photos2';
             const uploadUrl = `https://storage.googleapis.com/upload/storage/v1/b/${bucketName}/o`;
             
             // Prepare the upload request
@@ -322,7 +322,7 @@ class WeddingPhotoApp {
     
     async makeFilePublic(filename) {
         try {
-            const bucketName = 'bucket-armalino-photos';
+            const bucketName = 'bucket-armalino-photos2';
             const aclUrl = `https://storage.googleapis.com/storage/v1/b/${bucketName}/o/${encodeURIComponent(filename)}/acl`;
             
             const response = await fetch(aclUrl, {
@@ -404,3 +404,4 @@ if ('serviceWorker' in navigator) {
     });
 
 } 
+
